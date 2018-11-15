@@ -38,5 +38,14 @@ add_filter( 'woocommerce_product_add_to_cart_text', function( $text ) {
 	return $text;
 }, 10 );
 
+// No.4
+function remove_featured_image($html, $attachment_id, $post_id) {
+    $featured_image = get_post_thumbnail_id($post_id);
+    if ($attachment_id != $featured_image) {
+        return $html;
+    }
+    return '';
+}
+add_filter('woocommerce_single_product_image_thumbnail_html', 'remove_featured_image', 10, 3);
 
 ?>
