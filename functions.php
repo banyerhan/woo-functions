@@ -1,3 +1,6 @@
+<?php
+
+// No.1
 function exclude_cat( $q ) {
 	
 	if( is_shop() || is_page('my-page') ) { // set conditions here
@@ -15,3 +18,14 @@ function exclude_cat( $q ) {
 	}
 }
 add_action('woocommerce_product_query', 'exclude_cat' );
+
+// No.2 
+function add_my_content_before_woo_shop() {
+
+        if( is_shop() ){
+            echo do_shortcode('[cherry_search_form]');
+
+        }
+}
+add_action('woo_main_content','add_my_content_before_woo_shop');
+?>
