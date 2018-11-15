@@ -48,4 +48,12 @@ function remove_featured_image($html, $attachment_id, $post_id) {
 }
 add_filter('woocommerce_single_product_image_thumbnail_html', 'remove_featured_image', 10, 3);
 
+// No.5
+function custom_override_checkout_fields( $fields )    
+{
+unset($fields['billing']['billing_country']); // just sample field you can on stackoverflow for related filed name 
+return $fields;
+}
+add_filter('woocommerce_checkout_fields','custom_override_checkout_fields');
+
 ?>
