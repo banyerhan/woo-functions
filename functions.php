@@ -31,12 +31,12 @@ add_action('woo_main_content','add_my_content_before_woo_shop');
 
 // No.3 
 add_filter( 'woocommerce_product_add_to_cart_text', function( $text ) {
-	global $product;
-	if ( $product->is_type( 'variable' ) ) { // product_type= variable, sample, downloads and so on;
-		$text = $product->is_purchasable() ? __( 'My Favourite Name', 'woocommerce' ) : __( 'Read more', 'woocommerce' );
-	}
-	return $text;
-}, 10 );
+    if ( 'Read more' == $text ) {
+        $text = __( 'View Details', 'woocommerce' );
+    }
+
+    return $text;
+} );
 
 // No.4
 function remove_featured_image($html, $attachment_id, $post_id) {
