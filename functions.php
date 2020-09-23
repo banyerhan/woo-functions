@@ -19,6 +19,17 @@ function exclude_cat( $q ) {
 }
 add_action('woocommerce_product_query', 'exclude_cat' );
 
+// woocommerce single product page tab remove and rename
+add_filter( 'woocommerce_product_tabs', 'woo_customize_tabs', 100, 1 );
+function woo_customize_tabs( $tabs ) {
+
+    unset($tabs['reviews']);    // Remove the reviews tab
+
+    $tabs['description']['title'] = __( 'More Information' ); // Rename the description tab
+
+    return $tabs;
+}
+
 // add new item on the top shop lood
 function add_my_content_before_woo_shop() {
 
