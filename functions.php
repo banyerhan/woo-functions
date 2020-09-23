@@ -1,6 +1,6 @@
 <?php
 
-// No.1
+// query prodcut by category
 function exclude_cat( $q ) {
 	
 	if( is_shop() || is_page('my-page') ) { // set conditions here
@@ -19,7 +19,7 @@ function exclude_cat( $q ) {
 }
 add_action('woocommerce_product_query', 'exclude_cat' );
 
-// No.2 
+// add new item on the top shop lood
 function add_my_content_before_woo_shop() {
 
         if( is_shop() ){
@@ -29,7 +29,7 @@ function add_my_content_before_woo_shop() {
 }
 add_action('woo_main_content','add_my_content_before_woo_shop');
 
-// No.3 
+// change text if product is no price
 add_filter( 'woocommerce_product_add_to_cart_text', function( $text ) {
     if ( 'Read more' == $text ) {
         $text = __( 'View Details', 'woocommerce' );
@@ -38,7 +38,7 @@ add_filter( 'woocommerce_product_add_to_cart_text', function( $text ) {
     return $text;
 } );
 
-// No.4
+// remove features image
 function remove_featured_image($html, $attachment_id, $post_id) {
     $featured_image = get_post_thumbnail_id($post_id);
     if ($attachment_id != $featured_image) {
@@ -48,7 +48,7 @@ function remove_featured_image($html, $attachment_id, $post_id) {
 }
 add_filter('woocommerce_single_product_image_thumbnail_html', 'remove_featured_image', 10, 3);
 
-// No.5
+//override billing checkout
 function custom_override_checkout_fields( $fields )    
 {
 unset($fields['billing']['billing_country']); // just sample field you can on stackoverflow for related filed name 
@@ -89,11 +89,25 @@ function woo_related_products_limit() {
 	$args['posts_per_page'] = 6;
 	return $args;
 }
+
+//change post grid
 add_filter( 'woocommerce_output_related_products_args', 'nf_related_products_args', 20 );
   function nf_related_products_args( $args ) {
 	$args['posts_per_page'] = 6; // 6 related products
 	$args['columns'] = 6; // arranged in 5 columns
 	return $args;
+}
+
+//replaced add to cart text into deseried in single product
+add_filter( 'woocommerce_product_single_add_to_cart_text', 'custom_cart_button_text' );
+function custom_cart_button_text( $html ) {
+	if (ICL_LANGUAGE_CODE =='en'): {
+  	return str_replace( __( 'Add to cart', 'woocommerce' ), __( 'Add to Cart', 'woocommerce' ), $html );
+   }
+   elseif (ICL_LANGUAGE_CODE =='mon'): {
+   	return str_replace( __( 'Add to cart', 'woocommerce' ), __( 'Your word', 'woocommerce' ), $html );
+   }
+endif;
 }
 
 ?>
