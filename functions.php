@@ -40,6 +40,13 @@ function add_my_content_before_woo_shop() {
 }
 add_action('woo_main_content','add_my_content_before_woo_shop');
 
+// Change related products text
+add_filter( 'woocommerce_product_related_products_heading', 'single_related_text' );
+
+function single_related_text(){
+    return __('These products might be cool', 'woocommerce');
+}
+
 // change text if product is no price
 add_filter( 'woocommerce_product_add_to_cart_text', function( $text ) {
     if ( 'Read more' == $text ) {
